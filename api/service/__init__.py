@@ -7,10 +7,9 @@ from typing import List
 
 app = FastAPI()
 
-# Pydantic model for response containing Transaction object
-
 
 class TransactionResponse(BaseModel):
+    '''Pydantic model for response containing Transaction object'''
     id: str
     input: str
     output: str
@@ -20,32 +19,43 @@ class TransactionResponse(BaseModel):
 
 
 @app.get("/api/transactions", response_model=List[TransactionResponse])
-async def get_transactions(wallet: str):
-    transactions_out = session.query(Transaction).filter_by(input=wallet).all()
-    transactions_in = session.query(Transaction).filter_by(output=wallet).all()
-    if not (transactions_in or transactions_out):
+async def get_transactions(address: str) -> List[TransactionResponse]:
+    '''
+    Get a list of transactions for a given address.
+    '''
+    transactions_raw = session.query(Transaction).filter_by(input=address).union(
+        session.query(Transaction).filter_by(output=address)).all()
+    if not transactions_raw:
         print('data not found, generating dummy data...')
-        generate_dummy_data(wallet)
-        transactions_out = session.query(
-            Transaction).filter_by(input=wallet).all()
-        transactions_in = session.query(
-            Transaction).filter_by(output=wallet).all()
-    transactions = [t.to_json() for t in transactions_in] + \
-        [t.to_json() for t in transactions_out]
+        generate_dummy_transactions(address)
+        transactions_raw = session.query(Transaction).filter_by(input=address).union(
+            session.query(Transaction).filter_by(output=address)).all()
+    transactions = [t.to_json() for t in transactions_raw]
     return transactions
 
-# generate some random transaction
-# with given wallet
+
+@app.get("/api/address")
+async def get_addresses(seed: str):
+    # TODO
+    pass
 
 
-def generate_dummy_data(wallet: str):
+@app.post("/api/address")
+async def add_address(seed: str):
+    pass
+
+
+def generate_dummy_transactions(address: str):
+    '''
+    Generate random transactions with given address.
+    '''
     for i in range(randint(0, 10)):
         if i % 2:
-            inp = wallet
+            inp = address
             outp = 'lol'
         else:
             inp = 'lol'
-            outp = wallet
+            outp = address
         transaction = Transaction(
             input=inp, output=outp, amount=randint(1, 1000), fee=randint(1, 7)/1000)
         session.add(transaction)
