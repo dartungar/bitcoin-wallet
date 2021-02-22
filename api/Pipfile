@@ -12,6 +12,7 @@ psycopg2 = "*"
 uvicorn = "*"
 sqlalchemy-utils = "*"
 pydantic = "*"
+bitcoinaddress = "*"
 
 [requires]
 python_version = "3.7"

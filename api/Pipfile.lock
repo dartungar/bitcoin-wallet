@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5c72e1bf8589307e3456a062ded53c05a915e89630d6f0a599db14e0202e4aa1"
+            "sha256": "ac994e5ad877865ab926ab9611469faf06819b69bd280079b9e72c3d961da7bf"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,12 +16,34 @@
         ]
     },
     "default": {
+        "base58": {
+            "hashes": [
+                "sha256:171a547b4a3c61e1ae3807224a6f7aec75e364c4395e7562649d7335768001a2",
+                "sha256:8225891d501b68c843ffe30b86371f844a21c6ba00da76f52f9b998ba771fb48"
+            ],
+            "version": "==2.1.0"
+        },
+        "bitcoinaddress": {
+            "hashes": [
+                "sha256:35c75003a33fd33caeec45ef57cac8f73a6ace98f3c3231e85115305fa602003",
+                "sha256:bc8da0398c70893a086778adf64f71cd44cf724b95af3f41f921151382f419eb"
+            ],
+            "index": "pypi",
+            "version": "==0.1.5"
+        },
         "click": {
             "hashes": [
                 "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a",
                 "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"
             ],
             "version": "==7.1.2"
+        },
+        "ecdsa": {
+            "hashes": [
+                "sha256:881fa5e12bb992972d3d1b3d4dfbe149ab76a89f13da02daa5ea1ec7dea6e747",
+                "sha256:cfc046a2ddd425adbd1a78b3c46f0d1325c657811c0f45ecc3a0a6236c1e50ff"
+            ],
+            "version": "==0.16.1"
         },
         "fastapi": {
             "hashes": [
