@@ -1,0 +1,25 @@
+{
+  "name": "bitcoin-wallet",
+  "version": "1.0.0",
+  "description": "bitcoin wallet prototype",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "api": "cd api && pipenv run uvicorn service:app --reload",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run client\" \"npm run api\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dartungar/bitcoin-wallet.git"
+  },
+  "author": "dartungar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dartungar/bitcoin-wallet/issues"
+  },
+  "homepage": "https://github.com/dartungar/bitcoin-wallet#readme",
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  }
+}

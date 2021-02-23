@@ -1,9 +1,11 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import TransactionsList from "../transactions/TransactionsList";
 
-interface Props {}
+const AddressDetails: React.FC = () => {
+  const { address } = useParams<any>();
 
-const AddressDetails = (props: Props) => {
-  return <div></div>;
+  return <TransactionsList address={address} />;
 };
 
 export default AddressDetails;
