@@ -12,13 +12,6 @@ const AddressList: React.FC = (props) => {
   } = useContext(AppContext);
 
   useEffect(() => {
-    if (!seed) {
-      console.log("affirming seed");
-      affirmSeed();
-    }
-  }, [seed]);
-
-  useEffect(() => {
     if (seed) {
       console.log("getting addresses data", seed);
       getAddressesData(seed);
@@ -28,7 +21,7 @@ const AddressList: React.FC = (props) => {
   return (
     <Table hover responsive>
       <thead>
-        <tr>
+        <tr className="table-header">
           <th>Address</th>
           <th>₿</th>
         </tr>

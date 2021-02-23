@@ -27,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Pydantic models
+### Pydantic models ###
 
 
 class ITransaction(BaseModel):
@@ -47,6 +47,8 @@ class IAddressData(BaseModel):
 class ISeed(BaseModel):
     seed: str
 
+
+### API routes ###
 
 @app.get("/api/seed")
 async def generate_seed():
@@ -126,6 +128,8 @@ async def get_transactions(address: Optional[str] = None) -> List[ITransaction]:
     transactions = [t.to_json() for t in transactions_raw]
     return transactions
 
+
+### helpers ###
 
 def generate_and_add_address(seed: Optional[str] = None):
     '''

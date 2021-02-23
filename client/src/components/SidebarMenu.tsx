@@ -6,8 +6,8 @@ interface Props {}
 
 const SidebarMenu = (props: Props) => {
   return (
-    <Nav defaultActiveKey="/" className="flex-column text-secondary pl-3">
-      <h5 className="pt-3">Bitcoin Wallet</h5>
+    <Nav defaultActiveKey="/" className="flex-column text-secondary px-3 mb-4">
+      <h5>Bitcoin Wallet</h5>
       <Nav.Item>
         <Link to="/">Home</Link>
       </Nav.Item>

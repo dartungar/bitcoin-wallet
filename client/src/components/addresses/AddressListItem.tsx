@@ -9,7 +9,7 @@ interface Props {
 const AddressListItem = (props: Props) => {
   return (
     <tr>
-      <td>
+      <td className="text-break">
         <Link to={`/addresses/${props.address.address}`}>
           {props.address.address}
         </Link>

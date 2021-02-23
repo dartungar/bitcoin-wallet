@@ -44,7 +44,7 @@ const TransactionsListItem = (props: Props) => {
       >
         {state?.type}
       </td>
-      <td className="small">{state?.address}</td>
+      <td className="small text-break">{state?.address}</td>
       <td
         className={state?.type === "Incoming" ? "text-success" : "text-danger"}
       >

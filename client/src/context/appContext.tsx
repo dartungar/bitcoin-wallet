@@ -50,7 +50,11 @@ const AppContextProvider: React.FC = ({ children }) => {
   // get generated seed from API
   // save to local storage
   const generateAndSaveSeed = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/seed");
+    const res = await fetch(
+      `${
+        process.env.NODE_ENV === "development" ? "http://localhost:8000" : ""
+      }/api/seed`
+    );
 
     if (res.ok) {
       const seed = await res.json();
@@ -64,19 +68,27 @@ const AppContextProvider: React.FC = ({ children }) => {
   const generateAddress = async (seed: string) => {
     //
     setLoading();
-    const res = await fetch("http://127.0.0.1:8000/api/address", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "appliaction/json",
-      },
-      body: JSON.stringify({ seed }),
-    });
+    const res = await fetch(
+      `${
+        process.env.NODE_ENV === "development" ? "http://localhost:8000" : ""
+      }/api/address`,
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "appliaction/json",
+        },
+        body: JSON.stringify({ seed }),
+      }
+    );
 
     if (res.ok) {
-      const new_address = await res.text();
-      dispatch({ type: ADD_ADDRESS, payload: new_address });
+      const new_address = await res.json();
+      dispatch({
+        type: ADD_ADDRESS,
+        payload: { address: new_address, balance: 0 },
+      });
     }
   };
 
@@ -85,11 +97,16 @@ const AppContextProvider: React.FC = ({ children }) => {
     //
     setLoading();
 
-    const res = await fetch(`http://127.0.0.1:8000/api/addresses?seed=${seed}`);
+    const res = await fetch(
+      `${
+        process.env.NODE_ENV === "development" ? "http://localhost:8000" : ""
+      }/api/addresses?seed=${seed}`
+    );
 
     if (res.ok) {
       const data = await res.json();
       dispatch({ type: SET_ADDRESSES, payload: data });
+      console.log("got addresses data...");
     }
   };
 
@@ -99,12 +116,15 @@ const AppContextProvider: React.FC = ({ children }) => {
 
     const req_params = address ? `?address=${address}` : "";
     const res = await fetch(
-      `http://127.0.0.1:8000/api/transactions${req_params}`
+      `${
+        process.env.NODE_ENV === "development" ? "http://localhost:8000" : ""
+      }/api/transactions${req_params}`
     );
 
     if (res.ok) {
       const data = await res.json();
       dispatch({ type: SET_TRANSACTIONS, payload: data });
+      console.log("got transactions data...");
     }
   };
 
