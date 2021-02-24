@@ -6,7 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from random import randint
 from typing import List, Optional
-from bitcoinaddress import Wallet, Seed
+from bitcoinaddress import Wallet
+from datetime import datetime
 
 app = FastAPI()
 
@@ -16,7 +17,11 @@ origins = [
     "http://localhost:8000",
     "https://localhost:8000",
     "http://localhost:3000",
-    "https://localhost:3000"
+    "https://localhost:3000",
+    "http://localhost:8043",
+    "https://localhost:8043",
+    "http://localhost",
+    "https://localhost"
 ]
 
 app.add_middleware(
@@ -26,6 +31,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 ### Pydantic models ###
 
@@ -136,7 +142,7 @@ def generate_and_add_address(seed: Optional[str] = None):
     generate new address, random or for given seed.
     '''
     # this is no proper address generation
-    # but it is taking quite some time to get into bitcoin
+    # for prototyping purposes only
 
     wallet = Wallet()
     key = wallet.address.pubkey
@@ -167,6 +173,13 @@ def generate_dummy_transactions(address: str):
             inp = generate_and_add_address()
             outp = address
         transaction = Transaction(
-            input_address=inp, output_address=outp, amount=randint(1, 1000), fee=randint(1, 7)/1000)
+            input_address=inp, output_address=outp, amount=randint(1, 1000), fee=randint(1, 7)/1000, timestamp=random_date())
         session.add(transaction)
         session.commit()
+
+
+def random_date():
+    '''
+    generate datetime object with random date from 2020
+    '''
+    return datetime(2020, randint(1, 12), randint(1, 28), randint(0, 24), randint(0, 59), randint(0, 59))

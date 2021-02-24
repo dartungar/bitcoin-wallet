@@ -19,15 +19,21 @@ const TransactionsListItem = (props: Props) => {
     state: { addresses },
   } = useContext(AppContext);
 
-  const [state, setState] = useState<State | null>(null);
+  // transaction data is modified for display and stored in itemState
+  const [itemState, setItemState] = useState<State | null>(null);
 
   useEffect(() => {
+    // transaction type is determined based on input & output addresses
+    // our addres is output => we received BTC => transaction is incoming
     const type = addresses.some((a) => a.address === props.transaction.output)
       ? "Incoming"
       : "Outgoing";
+
+    // determine whether show sender of recepient as 'other address' of the transaction
     const addr =
       type === "Incoming" ? props.transaction.input : props.transaction.output;
-    setState({
+
+    setItemState({
       time: props.transaction.timestamp,
       type,
       address: addr,
@@ -37,20 +43,24 @@ const TransactionsListItem = (props: Props) => {
   }, []);
 
   return (
-    <tr className="small">
-      <td>{state?.time}</td>
+    <tr className="small text-light">
+      <td>{itemState?.time}</td>
       <td
-        className={state?.type === "Incoming" ? "text-success" : "text-danger"}
+        className={
+          itemState?.type === "Incoming" ? "text-success" : "text-danger"
+        }
       >
-        {state?.type}
+        {itemState?.type}
       </td>
-      <td className="small text-break">{state?.address}</td>
+      <td className="small text-break">{itemState?.address}</td>
       <td
-        className={state?.type === "Incoming" ? "text-success" : "text-danger"}
+        className={
+          itemState?.type === "Incoming" ? "text-success" : "text-danger"
+        }
       >
-        {state?.amount}
+        {itemState?.amount} ₿
       </td>
-      <td>{state?.fee}</td>
+      <td>{itemState?.fee} ₿</td>
     </tr>
   );
 };

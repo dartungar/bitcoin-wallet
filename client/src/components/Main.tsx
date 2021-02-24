@@ -1,20 +1,20 @@
 import React, { useEffect, useContext, useState } from "react";
-import { AppContext } from "./context/AppContext";
+import { AppContext } from "../context/AppContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import SidebarMenu from "./components/SidebarMenu";
-import HomePage from "./components/HomePage";
-import AddressDetails from "./components/addresses/AddressDetails";
-import TransactionsList from "./components/transactions/TransactionsList";
-import FirstTimeModal from "./components/FirstTimeModal";
+import Menu from "./Menu";
+import HomePage from "./HomePage";
+import AddressDetails from "./addresses/AddressDetails";
+import TransactionsList from "./transactions/TransactionsList";
+import FirstTimeModal from "./FirstTimeModal";
 
-const AppContainer = () => {
+const Main = () => {
   const {
     state: { seed },
     actions: { affirmSeed },
   } = useContext(AppContext);
 
+  // show newly generated seed on first visit
   const [showFirstTimeModal, setShowFirstTimeModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,16 +25,14 @@ const AppContainer = () => {
     }
   }, []);
 
-  //if (showFirstTimeModal) return <FirstTimeModal />;
-
   return (
-    <Container fluid className="px-0 py-3">
+    <Container fluid className="p-3 bg-dark full-height">
       <Router>
         <Row>
           <Col lg={1}>
-            <SidebarMenu />
+            <Menu />
           </Col>
-          <Col>
+          <Col className="pr-0">
             <Switch>
               <Route path="/transactions" component={TransactionsList} />
               <Route path="/addresses/:address" component={AddressDetails} />
@@ -51,4 +49,4 @@ const AppContainer = () => {
   );
 };
 
-export default AppContainer;
+export default Main;

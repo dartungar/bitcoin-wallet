@@ -1,5 +1,6 @@
 import { AppContextProvider } from "./context/AppContext";
-import Main from "./Main";
+import Main from "./components/Main";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 
 function App() {

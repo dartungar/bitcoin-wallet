@@ -1,7 +1,6 @@
 from random import randint
 from sqlalchemy import Column, String, Float, DateTime, DateTime, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
 from uuid import uuid4
 from datetime import datetime
 from .db import Base, engine
@@ -9,6 +8,9 @@ from .db import Base, engine
 
 # transaction
 class Transaction(Base):
+    '''
+    Represents bitcoin transactions.
+    '''
     __tablename__ = "transaction"
     id = Column(UUID(as_uuid=True), primary_key=True,
                 default=uuid4, unique=True, nullable=False)
@@ -23,12 +25,15 @@ class Transaction(Base):
 
     def to_json(self):
         item_obj = {"id": str(self.id), "input": self.input_address, "output": self.output_address,
-                    "amount": self.amount, "fee": self.fee, "timestamp": str(self.timestamp)}
+                    "amount": self.amount, "fee": self.fee, "timestamp": self.timestamp.strftime("%d.%m.%Y %H:%M:%S")}
         return item_obj
 
 
 # address
 class Address(Base):
+    '''
+    Represents bitcoin wallet address.
+    '''
     __tablename__ = "address"
     address = Column(String, primary_key=True, unique=True, nullable=False)
     # should be hashed or otherwise protected in prod
@@ -37,4 +42,5 @@ class Address(Base):
     initial_balance = Column(Float, nullable=False, default=10000)
 
 
+# create models
 Base.metadata.create_all(engine)

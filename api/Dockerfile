@@ -3,4 +3,4 @@ WORKDIR /api
 COPY . .
 RUN pip install pipenv
 RUN pipenv install
-EXPOSE 5000
+EXPOSE 8001

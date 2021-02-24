@@ -2,26 +2,30 @@ import React, { useEffect, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import AddressListItem from "./AddressListItem";
 import Table from "react-bootstrap/Table";
-
+import Spinner from "react-bootstrap/Spinner";
 import { IAddress } from "../../context/types";
 
-const AddressList: React.FC = (props) => {
+const AddressList: React.FC = () => {
   const {
-    state: { seed, addresses },
-    actions: { affirmSeed, getAddressesData },
+    state: { seed, addresses, isLoading },
+    actions: { getAddressesData },
   } = useContext(AppContext);
 
   useEffect(() => {
     if (seed) {
-      console.log("getting addresses data", seed);
       getAddressesData(seed);
     }
   }, [seed]);
 
+  // if loading, show spinner
+  if (isLoading) {
+    return <Spinner animation="border" variant="light" className="spinner" />;
+  }
+
   return (
     <Table hover responsive>
       <thead>
-        <tr className="table-header">
+        <tr className="table-header text-light">
           <th>Address</th>
           <th>₿</th>
         </tr>
